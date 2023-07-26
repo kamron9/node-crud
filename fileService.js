@@ -5,9 +5,16 @@ const path = require('path')
 class FileService{
      saveFile (file){
         try{
-            const fileName = uuid.v4() + 'jpg'
-            const filePath = path.resolve('static', fileName)
-            file.mv(filePath)
+            let fileName = null
+            Object.keys(file).forEach(key=>{
+                const filePath = path.join(__dirname,'static/photo', file[key].name.split(" ").join(""))
+                fileName = file[key].name.split(" ").join("")
+                file[key].mv(filePath,(err)=>{
+                    if(err){
+                        throw new Error(err)
+                    }
+                })
+            })
             return fileName
         }
         catch (e) {

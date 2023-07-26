@@ -9,6 +9,11 @@ const app = express();
 app.use(express.json())
 app.use(fileUpload({}))
 app.use('/api', postRouter)
+app.use(express.static('static'))
+
+app.get('/', (req,res)=>{
+  res.redirect('api/posts')
+})
 
 
 

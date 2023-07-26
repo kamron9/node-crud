@@ -3,9 +3,11 @@ const fileService = require('../fileService')
 class PostController{
     async create(req,res) {
         try{
-            const {author,title,content,picture} = req.body
-            const fileName = fileService.saveFile(picture)
-            const post = await Post.create({author,title,content,picture:fileName})
+            const {author,title,content} = req.body
+            const file = req.files
+            console.log(file)
+            const fileName = fileService.saveFile(file)
+            const post = await Post.create({author,title,content,picture:`${process.env.HOST}photo/${fileName}`})
             res.json(post)
         }
         catch (e) {
